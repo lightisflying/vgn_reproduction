@@ -1,6 +1,8 @@
 # vgn_reproduction
 这是VGN网络的代码复现，由于主要在colab上进行代码调试，无法显示图像，故将图像显示相关部分删去。
-dockerHub地址：[here](https://hub.docker.com/repository/docker/lightisflying/vgn_repro/general))
+dockerHub地址：[here](https://hub.docker.com/repository/docker/lightisflying/vgn_repro/general))、
+
+注：docker image生成时由于用pip安装requirements.txt总是超时，故下载下来后还需要安装一下requirements.txt来配环境
 
 
 # 环境配置
