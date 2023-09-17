@@ -1,0 +1,31 @@
+1.版本错误
+2.找不到module named "vgn" -- 用sys添加路径
+3.因为加了注释所以缩进弄错了
+
+4.File "scripts/train_vgn.py", line 234, in _update
+    y_pred = select(net(x), index)
+  File "scripts/train_vgn.py", line 193, in select
+    label = qual_out[batch_index, :, index[:, 0], index[:, 1], index[:, 2]].squeeze()
+IndexError: index 40 is out of bounds for dimension 2 with size 40
+Epoch [1/30]: [6/158]   4%|##9                                                                            [00:29<14:52]
+
+solution:select函数中数组越界，使用了 torch.clamp 函数来限制索引的取值范围，确保它们不会超出数组的维度范围。（假设索引的维度与 qual_out 数组的维度相同。）
+
+5. (RobotLearn) E:\Robot_Learning\vgn>python scripts/sim_grasp.py --model data/models/vgn_conv.pth [--sim-gui] [--rviz]
+E:\Anaconda\envs\RobotLearn\lib\site-packages\numpy\_distributor_init.py:30: UserWarning: loaded more than 1 DLL from .libs:
+E:\Anaconda\envs\RobotLearn\lib\site-packages\numpy\.libs\libopenblas.GK7GX5KEQ4F6UYO3P26ULGBQYHGQO7J4.gfortran-win_amd64.dll
+E:\Anaconda\envs\RobotLearn\lib\site-packages\numpy\.libs\libopenblas64__v0.3.21-gcc_10_3_0.dll
+  warnings.warn("loaded more than 1 DLL from .libs:"
+Traceback (most recent call last):
+  File "scripts/sim_grasp.py", line 10, in <module>
+    from vgn.detection import VGN
+  File "E:\Robot_Learning\vgn\scripts\..\src\vgn\detection.py", line 43, in <module>
+    from vgn import vis
+  File "E:\Robot_Learning\vgn\scripts\..\src\vgn\vis.py", line 5, in <module>
+    from sensor_msgs.msg import PointCloud2
+ModuleNotFoundError: No module named 'sensor_msgs'
+
+solution：由于仅计算grasp的话可以不用可视化，本来应该可以尝试用ros系统去调试，但是在Windows中用ros系统有点不太好弄
+
+6. cannot connect to X server（colab运行时会报此bug）
+solution:删掉所有关于显示的代码，运行指令中删去 --sim-gui
